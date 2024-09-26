@@ -48,9 +48,9 @@ public class LogController {
     }
 
     @GET
-    public List<LogEntity> findAll() {
+    public List<LogEntity> findAll(@QueryParam("dslog") String dsLog) {
 
-        return logService.findAll();
+        return logService.findByDsLog(dsLog);
     }
 
     @GET

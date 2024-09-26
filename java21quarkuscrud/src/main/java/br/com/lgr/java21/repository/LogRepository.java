@@ -13,8 +13,12 @@ public class LogRepository implements PanacheRepositoryBase<LogEntity, UUID> {
 
     public List<LogEntity> findByDsLog(String dsLog) {
 
+        if (dsLog == null || dsLog.equalsIgnoreCase(""))
+            return findAll().list();
+
         String search = "%" + dsLog.toUpperCase() + "%";
 
         return list("upper(dsLog) like ?1", search);
+
     }
 }
