@@ -12,7 +12,7 @@ import java.util.UUID;
 @ApplicationScoped
 public class TransactionRepository implements PanacheRepositoryBase<TransactionEntity, UUID> {
 
-    Log LOG = LogFactory.getLog(TransactionRepository.class);
+    private static final Log LOGGER = LogFactory.getLog(TransactionRepository.class);
 
     public TransactionEntity persist(TransactionMessageRecord transaction) {
         TransactionEntity transactionEntity = new TransactionEntity();
@@ -22,7 +22,7 @@ public class TransactionRepository implements PanacheRepositoryBase<TransactionE
 
         persist(transactionEntity);
 
-        LOG.info("Transaction saved");
+        LOGGER.info("Transaction saved");
 
         return transactionEntity;
     }

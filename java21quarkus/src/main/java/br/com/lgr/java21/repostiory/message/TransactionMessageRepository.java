@@ -13,11 +13,11 @@ public class TransactionMessageRepository {
 
     @Channel("transaction-channel")
     Emitter<TransactionMessageRecord> transactionEmitter;
-    Log LOG = LogFactory.getLog(TransactionMessageRepository.class);
+    private static final Log LOGGER = LogFactory.getLog(TransactionMessageRepository.class);
 
 
     public void send(TransactionMessageRecord transaction) {
-
+        LOGGER.debug("Message Sent");
         transactionEmitter.send(transaction).toCompletableFuture().join();
 
     }

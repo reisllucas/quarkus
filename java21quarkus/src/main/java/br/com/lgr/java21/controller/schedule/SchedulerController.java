@@ -8,11 +8,11 @@ import org.apache.commons.logging.LogFactory;
 @ApplicationScoped
 public class SchedulerController {
 
-    Log LOG = LogFactory.getLog(SchedulerController.class);
+    private static final Log LOGGER = LogFactory.getLog(SchedulerController.class);
 
     @Scheduled(every = "60s", identity = "scheduled-task-job")
     void schedule() {
-        LOG.info("Scheduled run");
+        LOGGER.info("Scheduled run");
     }
 
 

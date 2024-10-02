@@ -17,11 +17,11 @@ import java.util.UUID;
 public interface LogRepository {
 
     @POST
-    LogEntityRecord create(LogRecord record);
+    LogEntityRecord create(LogRecord logRecord);
 
     @PUT
     @Path("/{id}")
-    LogEntityRecord update(@PathParam("id") UUID id, LogRecord record);
+    LogEntityRecord update(@PathParam("id") UUID id, LogRecord logRecord);
 
     @DELETE
     @Path("/{id}")

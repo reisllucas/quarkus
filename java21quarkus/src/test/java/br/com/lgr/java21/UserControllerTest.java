@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-public class UserControllerTest {
+class UserControllerTest {
 
     @ConfigProperty(name="quarkus.oidc.auth-server-url")
     String serverUrl;
@@ -28,7 +28,7 @@ public class UserControllerTest {
     String password;
 
     @Test
-    public void whenFindAllUsers_thenAllUsersShoulBeFound() {
+    void whenFindAllUsers_thenAllUsersShoulBeFound() {
         given()
                 .auth()
                 .oauth2(findAccessToken())
@@ -40,7 +40,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenFindAllUsersProjection_thenAllUsersShoulBeFound() {
+    void whenFindAllUsersProjection_thenAllUsersShoulBeFound() {
         given()
                 .auth()
                 .oauth2(findAccessToken())
@@ -52,7 +52,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenFindAllUsersHQL_thenAllUsersShoulBeFound() {
+    void whenFindAllUsersHQL_thenAllUsersShoulBeFound() {
         given()
                 .auth()
                 .oauth2(findAccessToken())
@@ -64,7 +64,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenFindUserById_thenUserShoulBeFound() {
+    void whenFindUserById_thenUserShoulBeFound() {
         String id = "5d08275c-3cc0-4c85-97a2-1f2776e93aa4";
         given()
                 .auth()
@@ -77,7 +77,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenFindUserById_thenUserShoulNotBeFound() {
+    void whenFindUserById_thenUserShoulNotBeFound() {
         String id = "7f0455cc-b97f-4f60-abdb-8649576bee17";
         given()
                 .auth()
@@ -89,7 +89,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenCreateUser_thenUserShouldBeFound() {
+    void whenCreateUser_thenUserShouldBeFound() {
         UserRecord userRecord = new UserRecord("usuario01","grupo01");
         given()
                 .auth()
@@ -138,7 +138,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenUpdateUser_thenUserShouldBeFound() {
+    void whenUpdateUser_thenUserShouldBeFound() {
         String id = "5d08275c-3cc0-4c85-97a2-1f2776e93aa4";
         UserRecord userRecord = new UserRecord("usuario01","grupo01");
         given()
@@ -167,7 +167,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenDeleteUser_thenNotContentShouldBeFound() {
+    void whenDeleteUser_thenNotContentShouldBeFound() {
         String id = "5d08275c-3cc0-4c85-97a2-1f2776e93aa4";
         given()
                 .auth()
@@ -177,34 +177,6 @@ public class UserControllerTest {
                 .then()
                 .statusCode(204);
     }
-
-    /*String findAccessToken() {
-        return given()
-                .auth()
-                .preemptive()
-                .basic(clientId, secret)
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .baseUri(serverUrl)
-                .body("username=admin&password=5354231Lgr#1&grant_type=password")
-                .post("/protocol/openid-connect/token")
-                .then().extract().response().jsonPath().getString("access_token");
-    }*/
-/*
-    String findAccessToken() {
-        return given()
-                .auth()
-                .preemptive()
-                .basic(clientId, secret)
-                .contentType("application/x-www-form-urlencoded")
-                .formParam("username","admin")
-                .formParam("password", "5354231Lgr#1")
-                .formParam("grant_type", "password")
-                //.post(serverUrl+ "/protocol/openid-connect/token")
-                .baseUri(serverUrl)
-                .when()
-                .post("/protocol/openid-connect/token")
-                .then().extract().response().jsonPath().getString("access_token");
-    }*/
 
     String findAccessToken() {
         return given()

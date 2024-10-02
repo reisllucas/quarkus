@@ -1,5 +1,6 @@
 package br.com.lgr.java21.service;
 
+import br.com.lgr.java21.domain.exception.RestClientCommunitacionException;
 import br.com.lgr.java21.domain.record.LogEntityRecord;
 import br.com.lgr.java21.domain.record.LogRecord;
 import br.com.lgr.java21.repostiory.http.LogRepository;
@@ -20,25 +21,27 @@ public class LogService {
     @RestClient
     LogRepository logRepository;
 
-    public LogEntityRecord create(LogRecord record) {
+
+
+    public LogEntityRecord create(LogRecord logRecord) {
         try {
-            return logRepository.create(record);
+            return logRepository.create(logRecord);
         } catch (ClientWebApplicationException cwae) {
             throw new BadRequestException(cwae.getResponse());
         }
 
     }
 
-    public LogEntityRecord update(UUID id, LogRecord record) {
+    public LogEntityRecord update(UUID id, LogRecord logRecord) {
         try {
-            return logRepository.update(id, record);
+            return logRepository.update(id, logRecord);
         } catch (ClientWebApplicationException cwae) {
             if (cwae.getResponse().getStatus() == 404) {
                 throw new NotFoundException(cwae.getResponse());
             } else if (cwae.getResponse().getStatus() == 400) {
                 throw new BadRequestException(cwae.getResponse());
             } else {
-                throw new RuntimeException("Error");
+                throw new RestClientCommunitacionException();
             }
         }
     }
@@ -52,7 +55,7 @@ public class LogService {
             } else if (cwae.getResponse().getStatus() == 400) {
                 throw new BadRequestException(cwae.getResponse());
             } else {
-                throw new RuntimeException("Error");
+                throw new RestClientCommunitacionException();
             }
         }
     }
@@ -66,7 +69,7 @@ public class LogService {
             } else if (cwae.getResponse().getStatus() == 400) {
                 throw new BadRequestException(cwae.getResponse());
             } else {
-                throw new RuntimeException("Error");
+                throw new RestClientCommunitacionException();
             }
         }
     }

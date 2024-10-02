@@ -21,11 +21,11 @@ public class TransactionService {
     @Inject
     TransactionRepository transactionRepository;
 
-    Log LOG = LogFactory.getLog(TransactionService.class);
+    private static final Log LOGGER = LogFactory.getLog(TransactionService.class);
 
     public TransactionMessageRecord send(TransactionMessageRecord transactionRecord) {
 
-        LOG.info(">>>> thread name: " + Thread.currentThread().getName());
+        LOGGER.info(">>>> thread name: " + Thread.currentThread().getName());
 
         transactionMessageRepository.send(transactionRecord);
 

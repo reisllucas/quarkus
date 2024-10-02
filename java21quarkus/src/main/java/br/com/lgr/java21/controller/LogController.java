@@ -24,14 +24,14 @@ public class LogController {
     LogService logService;
 
     @POST
-    public LogEntityRecord create(@Valid LogRecord record) {
-        return logService.create(record);
+    public LogEntityRecord create(@Valid LogRecord logRecord) {
+        return logService.create(logRecord);
     }
 
     @PUT
     @Path("/{id}")
-    public LogEntityRecord update(@PathParam("id") UUID id, @Valid LogRecord record) {
-        return logService.update(id,record);
+    public LogEntityRecord update(@PathParam("id") UUID id, @Valid LogRecord logRecord) {
+        return logService.update(id,logRecord);
     }
 
     @DELETE
