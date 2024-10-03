@@ -6,6 +6,7 @@ import br.com.lgr.java21.service.UserService;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -16,6 +17,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+
 import java.util.UUID;
 
 @Path("/users")
@@ -122,7 +124,9 @@ public class UserController {
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON,
                             schema = @Schema(
-                                    implementation = UserRecord.class))) UserRecord user) {
+                                    implementation = UserRecord.class)))
+            @Valid
+            UserRecord user) {
 
         return Response.status(Response.Status.CREATED)
                 .entity(userService.create(user))
@@ -152,8 +156,10 @@ public class UserController {
                             mediaType = MediaType.APPLICATION_JSON,
                             schema = @Schema(
                                     implementation = UserRecord.class)))
+            @Valid
             UserRecord user) {
         return Response.ok(userService.update(id, user)).build();
+
     }
 
     @DELETE

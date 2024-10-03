@@ -2,7 +2,8 @@ package br.com.lgr.java21.repostiory.http;
 
 import br.com.lgr.java21.domain.record.LogEntityRecord;
 import br.com.lgr.java21.domain.record.LogRecord;
-import io.quarkus.oidc.token.propagation.reactive.AccessTokenRequestReactiveFilter;
+import io.quarkus.oidc.token.propagation.AccessTokenRequestFilter;
+//import io.quarkus.oidc.token.propagation.reactive.AccessTokenRequestReactiveFilter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.*;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RegisterRestClient
-@RegisterProvider(AccessTokenRequestReactiveFilter.class)
+@RegisterProvider(AccessTokenRequestFilter.class)
 @ApplicationScoped
 @Path("/logs")
 public interface LogRepository {

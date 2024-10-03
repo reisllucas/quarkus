@@ -7,6 +7,7 @@ import br.com.lgr.java21.service.TransactionService;
 import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -54,13 +55,14 @@ public class TransactionController {
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON,
                             schema = @Schema(
-                                    implementation = TransactionRecord.class))) TransactionRecord transactionRecord) {
+                                    implementation = TransactionRecord.class)))
+            @Valid TransactionRecord transactionRecord) {
 
         return Response.status(Response.Status.CREATED).entity(
                 transactionService.send(
                         new TransactionMessageRecord(jsonWebToken.getName(),
-                        ZonedDateTime.now(),
-                        transactionRecord)
+                                ZonedDateTime.now(),
+                                transactionRecord)
                 )).build();
 
     }

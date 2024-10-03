@@ -9,7 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.jboss.resteasy.reactive.ClientWebApplicationException;
+import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,25 +21,22 @@ public class LogService {
     @RestClient
     LogRepository logRepository;
 
-
-
     public LogEntityRecord create(LogRecord logRecord) {
         try {
             return logRepository.create(logRecord);
-        } catch (ClientWebApplicationException cwae) {
-            throw new BadRequestException(cwae.getResponse());
+        } catch (ResteasyWebApplicationException rwae) {
+            throw new BadRequestException(rwae.unwrap().getResponse());
         }
-
     }
 
     public LogEntityRecord update(UUID id, LogRecord logRecord) {
         try {
             return logRepository.update(id, logRecord);
-        } catch (ClientWebApplicationException cwae) {
-            if (cwae.getResponse().getStatus() == 404) {
-                throw new NotFoundException(cwae.getResponse());
-            } else if (cwae.getResponse().getStatus() == 400) {
-                throw new BadRequestException(cwae.getResponse());
+        } catch (ResteasyWebApplicationException rwae) {
+            if (rwae.getResponse().getStatus() == 404) {
+                throw new NotFoundException(rwae.unwrap().getResponse());
+            } else if (rwae.getResponse().getStatus() == 400) {
+                throw new BadRequestException(rwae.unwrap().getResponse());
             } else {
                 throw new RestClientCommunitacionException();
             }
@@ -49,11 +46,11 @@ public class LogService {
     public void delete(UUID id) {
         try {
             logRepository.delete(id);
-        } catch (ClientWebApplicationException cwae) {
-            if (cwae.getResponse().getStatus() == 404) {
-                throw new NotFoundException(cwae.getResponse());
-            } else if (cwae.getResponse().getStatus() == 400) {
-                throw new BadRequestException(cwae.getResponse());
+        } catch (ResteasyWebApplicationException rwae) {
+            if (rwae.getResponse().getStatus() == 404) {
+                throw new NotFoundException(rwae.unwrap().getResponse());
+            } else if (rwae.getResponse().getStatus() == 400) {
+                throw new BadRequestException(rwae.unwrap().getResponse());
             } else {
                 throw new RestClientCommunitacionException();
             }
@@ -63,11 +60,11 @@ public class LogService {
     public LogEntityRecord findById(UUID id) {
         try {
             return logRepository.findById(id);
-        } catch (ClientWebApplicationException cwae) {
-            if (cwae.getResponse().getStatus() == 404) {
-                throw new NotFoundException(cwae.getResponse());
-            } else if (cwae.getResponse().getStatus() == 400) {
-                throw new BadRequestException(cwae.getResponse());
+        } catch (ResteasyWebApplicationException rwae) {
+            if (rwae.getResponse().getStatus() == 404) {
+                throw new NotFoundException(rwae.unwrap().getResponse());
+            } else if (rwae.getResponse().getStatus() == 400) {
+                throw new BadRequestException(rwae.unwrap().getResponse());
             } else {
                 throw new RestClientCommunitacionException();
             }
